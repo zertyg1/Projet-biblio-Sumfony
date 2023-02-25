@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Livre index{% endblock %}
+
+{% block body %}
+<div class="example-wrapper">
+    <h1>Livre index</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Titre</th>
+            <th>Auteur</th>
+            <th>Quatrieme</th>
+            <th>DateParution</th>
+            <th>EmpruntPossible</th>
+            <th>actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for livre in livres %}
+            <tr>
+                <td>{{ livre.id }}</td>
+                <td>{{ livre.titre }}</td>
+                <td>
+                    {% for auteur in livre.auteurs %} <!-- Affichage des auteurs et de leur nationalité, séparés chacun par des virgules -->
+                        {{ auteur.prenom }} {{ auteur.nom }} {{ auteur.nationalite.libelle}}{% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                </td>
+                <td>{{ livre.quatrieme }}</td>
+                <td>{{ livre.dateParution ? livre.dateParution|date('Y-m-d') : '' }}</td>
+                <td>{{ livre.empruntPossible ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('app_new_livre_show', {'id': livre.id}) }}">show</a>
+                    <a href="{{ path('app_new_livre_edit', {'id': livre.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+    <a href="{{ path('app_new_livre_new') }}">Create new</a>
+{% endblock %}

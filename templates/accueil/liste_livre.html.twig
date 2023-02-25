@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AccueilController!{% endblock %}
+
+{% block body %}
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Titre</th>
+                <th>Auteur</th>
+                <th>4eme</th>
+                <th>date parution</th>
+                <th>Empruntable</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {% for livre in tabLivres %}
+            <tr>
+                <td>{{livre.id}}</td>
+                <td>{{livre.titre}}</td>
+                {% for auteur in livre.auteurs %}
+                <td>
+                    {{auteur.nom}}
+                    {{auteur.prenom}}
+                    </br>
+                    {{auteur.nationalite.libelle}} {% if not loop.last %},{% endif %}
+                    {% endfor %}
+                </td>
+                <td>{{livre.quatrieme}}</td>
+                <td>{{livre.dateParution|date('d/m/Y')}}</td>
+                <td>{% if livre.empruntPossible %}
+                Oui
+                {% else %}
+                Non
+                {% endif %} 
+                
+                </td>
+                    
+                 
+            </tr>
+            
+            {% else %}
+            <tr>
+                <td colspan="5">Pas de livre</td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+        
+    </table>
+{% endblock %}
